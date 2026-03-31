@@ -1,0 +1,328 @@
+/* Modern Chat App Styles - Instagram DM Inspired */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.chat-container {
+  max-width: 800px;
+  height: 100vh;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+}
+
+.action-button.call {
+  background: rgba(0, 194, 165, 0.95);
+}
+
+.action-button.video {
+  background: rgba(231, 77, 142, 0.95);
+}
+
+.call-state {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  font-weight: 600;
+}
+
+.call-state.in-call {
+  background: rgba(5, 145, 255, 0.12);
+  border-color: rgba(5, 145, 255, 0.2);
+}
+
+.end-call {
+  border: none;
+  background: #f44336;
+  color: white;
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 70%;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message.own {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.message-bubble {
+  background: white;
+  padding: 12px 16px;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+  word-wrap: break-word;
+}
+
+.message.own .message-bubble {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.message-content {
+  margin-bottom: 4px;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: #8e8e93;
+  margin-top: 4px;
+}
+
+.message.own .message-time {
+  color: rgba(255,255,255,0.7);
+  text-align: right;
+}
+
+.input-area {
+  background: white;
+  padding: 20px;
+  border-top: 1px solid #e1e5e9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
+  background: #f1f3f4;
+  border-radius: 25px;
+  padding: 4px;
+  align-items: center;
+}
+
+.message-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 16px;
+  font-size: 1rem;
+  outline: none;
+  border-radius: 25px;
+}
+
+.send-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.send-button:hover {
+  transform: scale(1.05);
+}
+
+.send-button:active {
+  transform: scale(0.95);
+}
+
+.typing-indicator {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 8px 14px;
+  margin: 0 20px 10px;
+  border-radius: 12px;
+  font-style: italic;
+  color: #555;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100vh;
+    border-radius: 0;
+  }
+  
+  .chat-header {
+    border-radius: 0;
+  }
+  
+  .messages {
+    padding: 15px;
+  }
+  
+  .message {
+    max-width: 85%;
+  }
+  
+  .input-area {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .message-bubble {
+    padding: 10px 14px;
+  }
+  
+  .message-input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+.join-screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.join-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.join-box h1 {
+  margin-bottom: 12px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.join-box p {
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.join-box input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #d6d9dd;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.join-box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.join-box button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
