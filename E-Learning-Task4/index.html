@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - E-Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduLearn+</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="nav-link active">Home</a></li>
+                <li><a href="#" onclick="showPage('courses')" class="nav-link">Courses</a></li>
+                <li><a href="#" onclick="showPage('progress')" class="nav-link">Progress</a></li>
+                <li><a href="#" onclick="showPage('leaderboard')" class="nav-link">Leaderboard</a></li>
+                <li><a href="#" onclick="showPage('forum')" class="nav-link">Forum</a></li>
+                <li><a href="#" onclick="showPage('certificate')" class="nav-link">Certificate</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button onclick="toggleDarkMode()" class="theme-toggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile dropdown">
+                    <button class="dropdown-toggle">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="navUserName">John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="showPage('profile')">My Profile</a>
+                        <a href="#" onclick="showPage('wishlist')">My Wishlist</a>
+                        <a href="#" onclick="showPage('settings')">Settings</a>
+                        <hr>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to EduLearn</h1>
+                <p>Master new skills at your own pace with our comprehensive courses</p>
+                <button onclick="showPage('courses')" class="btn-primary">Explore Courses</button>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-book-open"></i>
+            </div>
+        </section>
+
+        <section class="featured-courses">
+            <h2>Featured Courses</h2>
+            <div class="courses-grid">
+                <div class="course-card featured">
+                    <div class="card-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Development Basics</h3>
+                    <p>Learn HTML, CSS, and JavaScript fundamentals</p>
+                    <div class="course-meta">
+                        <span class="instructor">By: John Smith</span>
+                        <span class="rating">⭐ 4.8</span>
+                    </div>
+                    <button onclick="enrollCourse('Web Development Basics')">Enroll Now</button>
+                </div>
+
+                <div class="course-card featured">
+                    <div class="card-image">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Advanced JavaScript</h3>
+                    <p>Master ES6+, async programming, and frameworks</p>
+                    <div class="course-meta">
+                        <span class="instructor">By: Sarah Johnson</span>
+                        <span class="rating">⭐ 4.9</span>
+                    </div>
+                    <button onclick="enrollCourse('Advanced JavaScript')">Enroll Now</button>
+                </div>
+
+                <div class="course-card featured">
+                    <div class="card-image">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Create beautiful responsive layouts for all devices</p>
+                    <div class="course-meta">
+                        <span class="instructor">By: Mike Davis</span>
+                        <span class="rating">⭐ 4.7</span>
+                    </div>
+                    <button onclick="enrollCourse('Responsive Design')">Enroll Now</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <h4>50K+</h4>
+                <p>Active Students</p>
+            </div>
+            <div class="stat-card">
+                <h4>200+</h4>
+                <p>Courses Available</p>
+            </div>
+            <div class="stat-card">
+                <h4>95%</h4>
+                <p>Satisfaction Rate</p>
+            </div>
+            <div class="stat-card">
+                <h4>24/7</h4>
+                <p>Support Available</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Courses Page -->
+    <div id="courses" class="page">
+        <section class="courses-section">
+            <h2>All Courses</h2>
+            
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Search courses..." onkeyup="filterCourses()">
+                <select id="categoryFilter" onchange="filterCourses()">
+                    <option value="">All Categories</option>
+                    <option value="programming">Programming</option>
+                    <option value="design">Design</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+
+            <div class="courses-grid-full" id="coursesGrid">
+                <!-- Courses will be dynamically loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Progress Tracking Page -->
+    <div id="progress" class="page">
+        <section class="progress-section">
+            <h2>My Learning Progress</h2>
+            
+            <div class="progress-stats">
+                <div class="progress-card">
+                    <h4>Courses Enrolled</h4>
+                    <p class="big-number" id="enrolledCount">0</p>
+                </div>
+                <div class="progress-card">
+                    <h4>Completed</h4>
+                    <p class="big-number" id="completedCount">0</p>
+                </div>
+                <div class="progress-card">
+                    <h4>Total Hours</h4>
+                    <p class="big-number" id="totalHours">0</p>
+                </div>
+                <div class="progress-card">
+                    <h4>Overall Progress</h4>
+                    <p class="big-number" id="overallProgress">0%</p>
+                </div>
+            </div>
+
+            <div class="enrolled-courses">
+                <h3>Your Courses</h3>
+                <div id="enrolledCoursesList">
+                    <!-- Enrolled courses will be shown here -->
+                </div>
+            </div>
+
+            <div class="achievements">
+                <h3>Achievements</h3>
+                <div class="achievement-badges">
+                    <div class="badge">
+                        <i class="fas fa-fire"></i>
+                        <span>7 Day Streak</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-star"></i>
+                        <span>Perfect Score</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-trophy"></i>
+                        <span>Course Master</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Certificate Page -->
+    <div id="certificate" class="page">
+        <section class="certificate-section">
+            <h2>Your Certificate</h2>
+            
+            <div class="certificate-container">
+                <div class="certificate">
+                    <div class="certificate-header">
+                        <i class="fas fa-certificate"></i>
+                        <h3>Certificate of Completion</h3>
+                    </div>
+                    
+                    <div class="certificate-body">
+                        <p class="cert-text">This is to certify that</p>
+                        <p class="cert-name" id="certName">John Doe</p>
+                        <p class="cert-text">has successfully completed the</p>
+                        <p class="cert-course" id="certCourse">E-Learning Internship Program</p>
+                        <p class="cert-text">with outstanding dedication and achievement</p>
+                        
+                        <div class="cert-details">
+                            <div class="cert-item">
+                                <span class="cert-label">Date:</span>
+                                <span class="cert-value" id="certDate">Loading...</span>
+                            </div>
+                            <div class="cert-item">
+                                <span class="cert-label">ID:</span>
+                                <span class="cert-value" id="certID">CERT-2026-00001</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certificate-footer">
+                        <div class="signature">
+                            <div class="sig-line"></div>
+                            <p>Director</p>
+                        </div>
+                        <div class="seal">
+                            <i class="fas fa-seal"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="certificate-actions">
+                    <button onclick="downloadCertificate()" class="btn-primary">
+                        <i class="fas fa-download"></i> Download Certificate
+                    </button>
+                    <button onclick="shareCertificate()" class="btn-secondary">
+                        <i class="fas fa-share-alt"></i> Share Certificate
+                    </button>
+                </div>
+            </div>
+
+            <div class="certificate-info">
+                <h3>About Your Certificate</h3>
+                <p>Your certificate will be issued upon successful completion of all required courses by your internship end date. This credential demonstrates your commitment to professional development and mastery of key skills.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Video Player -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeVideoModal()">&times;</span>
+            <h2 id="videoTitle">Video Lesson</h2>
+            <div class="video-player">
+                <iframe id="videoFrame" width="100%" height="500" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-controls">
+                <button onclick="markAsWatched()" class="btn-primary">Mark as Watched</button>
+                <button onclick="closeVideoModal()" class="btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Page -->
+    <div id="leaderboard" class="page">
+        <section class="leaderboard-section">
+            <h2>Learning Leaderboard</h2>
+            
+            <div class="leaderboard-filters">
+                <button onclick="setLeaderboardFilter('week')" class="filter-btn active">This Week</button>
+                <button onclick="setLeaderboardFilter('month')" class="filter-btn">This Month</button>
+                <button onclick="setLeaderboardFilter('all')" class="filter-btn">All Time</button>
+            </div>
+
+            <div class="leaderboard-table">
+                <div class="leaderboard-header">
+                    <div class="rank">Rank</div>
+                    <div class="name">Student</div>
+                    <div class="points">Points</div>
+                    <div class="courses">Courses Completed</div>
+                </div>
+                <div id="leaderboardList"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Forum Page -->
+    <div id="forum" class="page">
+        <section class="forum-section">
+            <h2>Learning Community Forum</h2>
+            
+            <div class="forum-header">
+                <button onclick="showPage('newTopic')" class="btn-primary">
+                    <i class="fas fa-plus"></i> New Discussion Topic
+                </button>
+            </div>
+
+            <div class="forum-filters">
+                <input type="text" id="forumSearch" placeholder="Search discussions..." onkeyup="filterForum()">
+                <select id="forumCategory" onchange="filterForum()">
+                    <option value="">All Categories</option>
+                    <option value="general">General Discussion</option>
+                    <option value="course">Course Related</option>
+                    <option value="help">Help & Support</option>
+                    <option value="resources">Resources</option>
+                </select>
+            </div>
+
+            <div id="forumPostsList"></div>
+        </section>
+    </div>
+
+    <!-- User Profile Page -->
+    <div id="profile" class="page">
+        <section class="profile-section">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileName">John Doe</h2>
+                    <p id="profileEmail">john.doe@edulearn.com</p>
+                    <p id="profileJoinDate">Joined: January 15, 2026</p>
+                </div>
+                <button onclick="showPage('settings')" class="btn-secondary">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-box">
+                    <i class="fas fa-book"></i>
+                    <div>
+                        <h4 id="profileCoursesEnrolled">0</h4>
+                        <p>Courses Enrolled</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4 id="profileCoursesCompleted">0</h4>
+                        <p>Courses Completed</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <h4 id="profilePoints">0</h4>
+                        <p>Total Points</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-fire"></i>
+                    <div>
+                        <h4 id="profileStreak">0</h4>
+                        <p>Day Streak</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-achievements">
+                <h3>Recent Achievements</h3>
+                <div id="profileAchievements" class="achievements-grid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Wishlist Page -->
+    <div id="wishlist" class="page">
+        <section class="wishlist-section">
+            <h2>My Wishlist</h2>
+            <div id="wishlistCourses" class="courses-grid-full"></div>
+        </section>
+    </div>
+
+    <!-- Settings Page -->
+    <div id="settings" class="page">
+        <section class="settings-section">
+            <h2>Account Settings</h2>
+            
+            <div class="settings-container">
+                <div class="settings-group">
+                    <h3>Profile Settings</h3>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="settingName" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="settingEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea id="settingBio" placeholder="Tell us about yourself" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Learning Preferences</h3>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="settingNotifications" checked>
+                            Receive course notifications
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="settingEmails" checked>
+                            Receive course recommendations
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Learning Speed</label>
+                        <select id="settingSpeed">
+                            <option value="standard">Standard</option>
+                            <option value="fast">Fast</option>
+                            <option value="slow">Slow</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Appearance</h3>
+                    <div class="form-group">
+                        <label>Theme</label>
+                        <select id="settingTheme" onchange="applyTheme()">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="saveSettings()" class="btn-primary">Save Changes</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content quiz-modal">
+            <span class="close" onclick="closeQuizModal()">&times;</span>
+            <div class="quiz-header">
+                <h2 id="quizTitle">Course Quiz</h2>
+                <div class="quiz-progress">
+                    <span id="quizProgress">Question 1 of 5</span>
+                </div>
+            </div>
+            <div id="quizContent"></div>
+            <div class="quiz-controls">
+                <button onclick="previousQuestion()" class="btn-secondary">Previous</button>
+                <button onclick="nextQuestion()" class="btn-primary" id="quizNextBtn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Detail Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content course-detail">
+            <span class="close" onclick="closeCourseModal()">&times;</span>
+            <div class="course-header">
+                <h2 id="courseDetailTitle">Course Title</h2>
+                <div class="course-actions">
+                    <button onclick="toggleWishlist()" class="btn-icon" title="Add to Wishlist">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <button onclick="shareCourseModal()" class="btn-icon" title="Share Course">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <p id="courseDetailDesc">Course description</p>
+            
+            <div class="course-info-grid">
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="courseDuration">12 hours</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span id="courseLevel">Beginner</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-video"></i>
+                    <span id="courseVideos">24 videos</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-star"></i>
+                    <span id="courseRating">4.8</span>
+                </div>
+            </div>
+
+            <div class="course-reviews">
+                <h3>Course Reviews</h3>
+                <div id="courseReviewsList"></div>
+                <button onclick="showReviewForm()" class="btn-primary">Add Review</button>
+            </div>
+
+            <div class="course-modules">
+                <h3>Course Modules</h3>
+                <div id="courseModulesList"></div>
+            </div>
+            <button onclick="startCourse()" class="btn-primary">Start Learning</button>
+        </div>
+    </div>
+
+    <!-- Review Form Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReviewModal()">&times;</span>
+            <h2>Share Your Review</h2>
+            <div class="review-form">
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-rating" id="reviewStars">
+                        <i class="fas fa-star" onclick="setReviewRating(1)"></i>
+                        <i class="fas fa-star" onclick="setReviewRating(2)"></i>
+                        <i class="fas fa-star" onclick="setReviewRating(3)"></i>
+                        <i class="fas fa-star" onclick="setReviewRating(4)"></i>
+                        <i class="fas fa-star" onclick="setReviewRating(5)"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea id="reviewText" placeholder="Write your review..." rows="5"></textarea>
+                </div>
+                <button onclick="submitReview()" class="btn-primary">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
